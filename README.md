@@ -1,3 +1,2 @@
-# Kecubunk.github.io
-* Mint Tea OS 10 Preview
-
+# Litle-Panda.github.io
+* Mint Tea OS Preview
