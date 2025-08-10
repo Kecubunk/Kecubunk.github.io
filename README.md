@@ -10,7 +10,8 @@ VirtualBox : virt-Manager </br>
 Partition : MBR </br>
 Filesystem : EXT4 </br>
 Iso : Hybrid iso
-
+architectures : amd64
+swap_file_size : 4096 in MB
 
 # OpenBox
 ![Openbox](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/1.png)
