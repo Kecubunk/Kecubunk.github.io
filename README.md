@@ -9,6 +9,8 @@ Build : DEBIAN Live-Build </br>
 VirtualBox : virt-Manager </br>
 Partition : MBR </br>
 Filesystem : EXT4 </br>
+Iso : Hybrid iso
+
 
 # OpenBox
 ![Openbox](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/1.png)
