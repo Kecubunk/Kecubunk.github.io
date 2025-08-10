@@ -8,6 +8,7 @@ Support MBR file system
 
 # OpenBox
 ![Openbox](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/1.png)
+![](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/openbox.gif)
 https://drive.google.com/file/d/1nj0L1n_xHsaP3h7NCzl7ZhoofAF3xYtg/view?usp=drive_link
 
 # Cinnamon
