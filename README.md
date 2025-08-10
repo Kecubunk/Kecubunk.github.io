@@ -17,11 +17,11 @@ https://drive.google.com/file/d/1Td-pTpxnINfEy6tqgXmjNiUe6nSkQx-5/view?usp=drive
 
 # Gnome
 ![Gnome](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/4.png)
-https://drive.google.com/file/d/1dCDNX8LFxkFZlz_HlrDXlkqEm5JjDGke/view?usp=drive_link
+[ISO DOWNLOAD](https://drive.google.com/file/d/1dCDNX8LFxkFZlz_HlrDXlkqEm5JjDGke/view?usp=drive_link)
 
 # XFCE
 ![XFCE](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/5.png)
-https://drive.google.com/file/d/14Cjb8grQ9YKRBz8AekVUHvrffA03hw-Z/view?usp=drive_link
+[ISO DOWNLOAD](https://drive.google.com/file/d/14Cjb8grQ9YKRBz8AekVUHvrffA03hw-Z/view?usp=drive_link)
 
 # PLASMA
 ![PLASMA](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/7.png)
