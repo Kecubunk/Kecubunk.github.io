@@ -9,11 +9,11 @@ Build : DEBIAN Live-Build </br>
 VirtualBox : virt-Manager </br>
 Partition : MBR </br>
 Filesystem : EXT4 </br>
-Iso : Hybrid iso
-architectures : amd64
-swap_file_size : 4096 in MB
-archive-areas : main contrib non-free non-free-firmware
-Kernel : 6.12.38
+Iso : Hybrid iso</br>
+architectures : amd64</br>
+swap_file_size : 4096 in MB</br>
+archive-areas : main contrib non-free non-free-firmware</br>
+Kernel : 6.12.38</br>
 
 # OpenBox
 ![Openbox](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/1.png)
