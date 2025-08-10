@@ -12,3 +12,6 @@ GeminiOS is Debian Trixie base Linux distribution that is made using debian live
 
 # XFCE
 ![XFCE](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/5.png)
+
+# PLASMA
+![PLASMA](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/7.png)
