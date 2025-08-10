@@ -5,7 +5,8 @@ GeminiOS is Debian Trixie base Linux distribution that is made using debian live
 Install with youre own risk !
 
 # Tested :
-VirtualBox (virt-manager)
+Build : DEBIAN Live-Build
+VirtualBox : virt-Manager
 Partition : MBR
 Filesystem : EXT4
 
