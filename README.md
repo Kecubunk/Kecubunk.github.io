@@ -25,7 +25,7 @@ https://drive.google.com/file/d/14Cjb8grQ9YKRBz8AekVUHvrffA03hw-Z/view?usp=drive
 
 # PLASMA
 ![PLASMA](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/7.png)
-https://drive.google.com/file/d/1HUq6I0LClr4XX5V0hOsi1mCwVTYGL6Vn/view?usp=drive_link
+![ISO DOWNLOAD](https://drive.google.com/file/d/1HUq6I0LClr4XX5V0hOsi1mCwVTYGL6Vn/view?usp=drive_link)
 
 
 # Support and Donate if you like my work
