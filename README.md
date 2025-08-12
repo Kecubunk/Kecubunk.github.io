@@ -40,5 +40,5 @@ Kernel : 6.12.38</br>
 ![MATE](https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/mate.png)
 [ISO DOWNLOAD](https://drive.google.com/file/d/1HUq6I0LClr4XX5V0hOsi1mCwVTYGL6Vn/view?usp=drive_link)
 
-# Support and Donate if you like my work
+# Buy me a cup of coffee
 http://paypal.me/Cahyohertanto
