@@ -1,0 +1,764 @@
+/* ===== CSS Variables ===== */
+:root {
+    --primary-color: #0078d4;
+    --primary-hover: #1084d8;
+    --secondary-color: #2d2d2d;
+    --bg-dark: #1e1e1e;
+    --bg-light: #f3f3f3;
+    --text-light: #ffffff;
+    --text-dark: #1e1e1e;
+    --border-color: #3d3d3d;
+    --window-bg: #f0f0f0;
+    --sidebar-bg: #2b2b2b;
+    --taskbar-bg: #1f1f1f;
+    --accent-color: #0078d4;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --transition: all 0.3s ease;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --border-radius: 8px;
+}
+
+/* ===== Reset & Base ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    overflow: hidden;
+    user-select: none;
+    background: var(--bg-dark);
+    color: var(--text-light);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ===== Boot Screen ===== */
+#boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.boot-logo {
+    text-align: center;
+    animation: fadeIn 1s ease;
+}
+
+.boot-logo i {
+    font-size: 100px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
+
+.boot-logo h1 {
+    font-size: 48px;
+    font-weight: 300;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+}
+
+.boot-progress {
+    width: 300px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.boot-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--primary-color);
+    animation: bootProgress 3s ease forwards;
+}
+
+.boot-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes bootProgress {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+/* ===== Desktop ===== */
+#desktop {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== Desktop Icons ===== */
+#desktop-icons {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1;
+}
+
+.desktop-icon {
+    width: 80px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.desktop-icon:active {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.desktop-icon.selected {
+    background: rgba(0, 120, 212, 0.3);
+    border: 1px solid rgba(0, 120, 212, 0.5);
+}
+
+.desktop-icon i {
+    font-size: 40px;
+    color: var(--text-light);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.desktop-icon span {
+    font-size: 11px;
+    text-align: center;
+    color: var(--text-light);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    word-break: break-word;
+}
+
+/* ===== Sidebar ===== */
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 56px;
+    height: calc(100vh - 48px);
+    background: rgba(43, 43, 43, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-100%);
+    transition: var(--transition);
+}
+
+#sidebar.visible {
+    transform: translateX(0);
+}
+
+.sidebar-apps {
+    flex: 1;
+    padding: 8px 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-app {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    border-radius: 8px;
+    margin-bottom: 4px;
+}
+
+.sidebar-app:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-app:active {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.sidebar-app i {
+    font-size: 20px;
+    color: var(--text-light);
+}
+
+.sidebar-footer {
+    padding: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar-user {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.sidebar-user:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-user i {
+    font-size: 28px;
+    color: var(--primary-color);
+}
+
+/* ===== Taskbar ===== */
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: var(--taskbar-bg);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+#start-button {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#start-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#start-button i {
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+#taskbar-apps {
+    flex: 1;
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+    overflow-x: auto;
+}
+
+.taskbar-app {
+    min-width: 44px;
+    height: 40px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.taskbar-app:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.taskbar-app.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.taskbar-app i {
+    font-size: 16px;
+}
+
+.taskbar-app span {
+    font-size: 12px;
+}
+
+#taskbar-tray {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0 10px;
+}
+
+.tray-item {
+    cursor: pointer;
+    padding: 5px;
+    transition: var(--transition);
+}
+
+.tray-item:hover {
+    color: var(--primary-color);
+}
+
+#clock {
+    font-size: 13px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+#clock:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== Start Menu ===== */
+#start-menu {
+    position: fixed;
+    bottom: 58px;
+    left: 10px;
+    width: 320px;
+    background: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    z-index: 999;
+    overflow: hidden;
+    animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.start-menu-header {
+    padding: 20px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+}
+
+.start-menu-header i {
+    font-size: 32px;
+}
+
+.start-menu-apps {
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.start-menu-app {
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.start-menu-app:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.start-menu-app i {
+    width: 24px;
+    text-align: center;
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.start-menu-footer {
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.start-menu-action {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.start-menu-action:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.start-menu-action i {
+    font-size: 20px;
+}
+
+.start-menu-action span {
+    font-size: 11px;
+}
+
+/* ===== Context Menu ===== */
+#context-menu {
+    position: fixed;
+    background: var(--secondary-color);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    z-index: 2000;
+    min-width: 180px;
+    padding: 5px 0;
+    animation: fadeIn 0.15s ease;
+}
+
+.context-menu-item {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.context-menu-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.context-menu-item i {
+    width: 16px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.context-menu-item span {
+    font-size: 13px;
+}
+
+.context-menu-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 5px 0;
+}
+
+/* ===== Windows Container ===== */
+#windows-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 48px);
+    z-index: 10;
+}
+
+/* ===== Window Styles ===== */
+.window {
+    position: absolute;
+    min-width: 400px;
+    min-height: 300px;
+    background: var(--window-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.window.focused {
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.window.maximized {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 48px) !important;
+    border-radius: 0;
+}
+
+.window-header {
+    height: 36px;
+    background: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    cursor: move;
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-light);
+}
+
+.window-title i {
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.window-title-text {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.window-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.window-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.window-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.window-btn.close:hover {
+    background: var(--error-color);
+}
+
+.window-body {
+    flex: 1;
+    overflow: hidden;
+    background: var(--window-bg);
+}
+
+.window-resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    cursor: se-resize;
+}
+
+/* ===== Lock Screen ===== */
+#lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.lock-screen-content {
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.lock-time {
+    font-size: 96px;
+    font-weight: 200;
+    margin-bottom: 10px;
+}
+
+.lock-date {
+    font-size: 24px;
+    margin-bottom: 40px;
+    opacity: 0.8;
+}
+
+.lock-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.lock-user i {
+    font-size: 80px;
+}
+
+.lock-user span {
+    font-size: 24px;
+}
+
+.lock-password {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.lock-password input {
+    width: 250px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.lock-password input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.lock-password input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lock-password button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.lock-password button:hover {
+    background: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+.lock-hint {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* ===== Shutdown Screen ===== */
+#shutdown-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.shutdown-content {
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.shutdown-content i {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: pulse 1s infinite;
+}
+
+.shutdown-content h1 {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+/* ===== Scrollbar Styles ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== Selection ===== */
+::selection {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100%;
+    }
+    
+    .desktop-icon {
+        width: 70px;
+    }
+    
+    .desktop-icon i {
+        font-size: 32px;
+    }
+    
+    #start-menu {
+        width: calc(100% - 20px);
+        left: 10px;
+        right: 10px;
+    }
+    
+    .window {
+        min-width: 100%;
+        min-height: 50%;
+    }
+}

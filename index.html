@@ -1,180 +1,522 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeminiOS - Debian 13</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        .carousel-item img {
-            height: 100%;
-            object-fit: contain;
-            max-height: 80vh;
-        }
-        .carousel {
-            background-color: transparent;
-        }
-    </style>
+    <title>Carbon OS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/apps.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Boot Screen -->
+    <div id="boot-screen">
+        <div class="boot-logo">
+            <i class="fas fa-desktop"></i>
+            <h1>Carbon OS</h1>
+            <div class="boot-progress">
+                <div class="boot-progress-bar"></div>
+            </div>
+            <p class="boot-text">Memuat sistem...</p>
+        </div>
+    </div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">GeminiOS</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#features">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#download">Download</a>
-                    </li>
-                </ul>
+    <!-- Desktop -->
+    <div id="desktop" class="hidden">
+        <!-- Desktop Icons -->
+        <div id="desktop-icons">
+            <div class="desktop-icon" data-app="terminal">
+                <i class="fas fa-terminal"></i>
+                <span>Terminal</span>
+            </div>
+            <div class="desktop-icon" data-app="filemanager">
+                <i class="fas fa-folder"></i>
+                <span>File Manager</span>
+            </div>
+            <div class="desktop-icon" data-app="calculator">
+                <i class="fas fa-calculator"></i>
+                <span>Calculator</span>
+            </div>
+            <div class="desktop-icon" data-app="browser">
+                <i class="fas fa-globe"></i>
+                <span>Browser</span>
+            </div>
+            <div class="desktop-icon" data-app="notepad">
+                <i class="fas fa-file-alt"></i>
+                <span>Notepad</span>
+            </div>
+            <div class="desktop-icon" data-app="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
             </div>
         </div>
-    </nav>
 
-    <header class="mt-5">
-        <div id="carouselExampleCaptions" class="carousel slide carousel-dark" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="images/1.png?text=GeminiOS" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Welcome to GeminiOS</h5>
-                        <p>A fast and stable OS based on Debian 13.</p>
-                    </div>
+        <!-- Windows Container -->
+        <div id="windows-container"></div>
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+            <div class="sidebar-apps">
+                <div class="sidebar-app" data-app="terminal" title="Terminal">
+                    <i class="fas fa-terminal"></i>
                 </div>
-                <div class="carousel-item">
-                    <img src="images/2.png?text=Modern+Desktop" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>OpenBox</h5>
-                        <p>OpenBox Environment suitable for old pc/laptop</p>
-                    </div>
+                <div class="sidebar-app" data-app="filemanager" title="File Manager">
+                    <i class="fas fa-folder"></i>
                 </div>
-                <div class="carousel-item">
-                    <img src="images/3.png?text=Open+Source" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Cinnamon</h5>
-                        <p>Cinnamon Desktop-Environment</p>
-                    </div>
-                </div>               
-                <div class="carousel-item">
-                    <img src="images/4.png?text=Open+Source" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Gnome</h5>
-                        <p>Gnome-Desktop Environment</p>
-                    </div>
+                <div class="sidebar-app" data-app="calculator" title="Calculator">
+                    <i class="fas fa-calculator"></i>
                 </div>
-                <div class="carousel-item">
-                    <img src="images/5.png?text=Open+Source" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>XFCE</h5>
-                        <p>XFCE Desktop-Environment</p>
-                    </div>
+                <div class="sidebar-app" data-app="browser" title="Browser">
+                    <i class="fas fa-globe"></i>
                 </div>
-                <div class="carousel-item">
-                    <img src="images/3.png?text=Open+Source" class="d-block w-100" alt="...">
-.                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Mate</h5>
-                        <p>Mate Desktop Environment</p>
-                    </div>
+                <div class="sidebar-app" data-app="notepad" title="Notepad">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="sidebar-app" data-app="settings" title="Settings">
+                    <i class="fas fa-cog"></i>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            <div class="sidebar-footer">
+                <div class="sidebar-user" title="User">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
         </div>
-    </header>
 
-    <section class="text-center my-5">
-        <img src="https://github.com/Kecubunk/Kecubunk.github.io/blob/master/images/openbox.gif" alt="Tux Linux GIF" class="img-fluid">
-    </section>
+        <!-- Taskbar -->
+        <div id="taskbar">
+            <div id="start-button" onclick="toggleStartMenu()">
+                <i class="fas fa-th"></i>
+            </div>
+            <div id="taskbar-apps"></div>
+            <div id="taskbar-tray">
+                <div class="tray-item" onclick="toggleVolume()">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+                <div class="tray-item" onclick="toggleWifi()">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <div class="tray-item" onclick="toggleBattery()">
+                    <i class="fas fa-battery-three-quarters"></i>
+                </div>
+                <div id="clock"></div>
+            </div>
+        </div>
 
-    <main id="about" class="container mt-5">
-        <section id="features" class="text-center">
-            <h2>Key Features</h2>
-            <p class="lead">Discover what makes GeminiOS the right choice for you.</p>
-        </section>
+        <!-- Start Menu -->
+        <div id="start-menu" class="hidden">
+            <div class="start-menu-header">
+                <i class="fas fa-user-circle"></i>
+                <span id="start-username">User</span>
+            </div>
+            <div class="start-menu-apps">
+                <div class="start-menu-app" onclick="openApp('terminal')">
+                    <i class="fas fa-terminal"></i>
+                    <span>Terminal</span>
+                </div>
+                <div class="start-menu-app" onclick="openApp('filemanager')">
+                    <i class="fas fa-folder"></i>
+                    <span>File Manager</span>
+                </div>
+                <div class="start-menu-app" onclick="openApp('calculator')">
+                    <i class="fas fa-calculator"></i>
+                    <span>Calculator</span>
+                </div>
+                <div class="start-menu-app" onclick="openApp('browser')">
+                    <i class="fas fa-globe"></i>
+                    <span>Browser</span>
+                </div>
+                <div class="start-menu-app" onclick="openApp('notepad')">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Notepad</span>
+                </div>
+                <div class="start-menu-app" onclick="openApp('settings')">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
+            <div class="start-menu-footer">
+                <div class="start-menu-action" onclick="lockScreen()">
+                    <i class="fas fa-lock"></i>
+                    <span>Kunci Layar</span>
+                </div>
+                <div class="start-menu-action" onclick="restartOS()">
+                    <i class="fas fa-redo"></i>
+                    <span>Mulai Ulang</span>
+                </div>
+                <div class="start-menu-action" onclick="shutdownOS()">
+                    <i class="fas fa-power-off"></i>
+                    <span>Matikan</span>
+                </div>
+            </div>
+        </div>
 
-        <section class="row mt-4">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Rock Solid </h5>
-                        <p class="card-text">Based on Debian 13 "Trixie", known for its robustness and reliability.</p>
+        <!-- Context Menu -->
+        <div id="context-menu" class="hidden">
+            <div class="context-menu-item" onclick="refreshDesktop()">
+                <i class="fas fa-sync-alt"></i>
+                <span>Refresh</span>
+            </div>
+            <div class="context-menu-item" onclick="openApp('terminal')">
+                <i class="fas fa-terminal"></i>
+                <span>Buka Terminal</span>
+            </div>
+            <div class="context-menu-item" onclick="openApp('filemanager')">
+                <i class="fas fa-folder"></i>
+                <span>Buka File Manager</span>
+            </div>
+            <div class="context-menu-divider"></div>
+            <div class="context-menu-item" onclick="openApp('settings')">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lock Screen -->
+    <div id="lock-screen" class="hidden">
+        <div class="lock-screen-content">
+            <div class="lock-time" id="lock-time"></div>
+            <div class="lock-date" id="lock-date"></div>
+            <div class="lock-user">
+                <i class="fas fa-user-circle"></i>
+                <span id="lock-username">User</span>
+            </div>
+            <div class="lock-password">
+                <input type="password" id="lock-password" placeholder="Masukkan password" onkeypress="handleLockPassword(event)">
+                <button onclick="unlockScreen()"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <p class="lock-hint">Tekan Enter atau klik tombol untuk membuka</p>
+        </div>
+    </div>
+
+    <!-- Shutdown Screen -->
+    <div id="shutdown-screen" class="hidden">
+        <div class="shutdown-content">
+            <i class="fas fa-power-off"></i>
+            <h1>Mematikan...</h1>
+        </div>
+    </div>
+
+    <!-- Templates for App Windows -->
+    <template id="window-template">
+        <div class="window" data-window-id="">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="window-icon"></i>
+                    <span class="window-title-text"></span>
+                </div>
+                <div class="window-controls">
+                    <button class="window-btn minimize" title="Minimize">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="window-btn maximize" title="Maximize">
+                        <i class="fas fa-square"></i>
+                    </button>
+                    <button class="window-btn close" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="window-body"></div>
+            <div class="window-resize-handle"></div>
+        </div>
+    </template>
+
+    <!-- Terminal Template -->
+    <template id="terminal-template">
+        <div class="terminal-app">
+            <div class="terminal-output" id="terminal-output"></div>
+            <div class="terminal-input-line">
+                <span class="terminal-prompt"></span>
+                <input type="text" class="terminal-input" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </template>
+
+    <!-- File Manager Template -->
+    <template id="filemanager-template">
+        <div class="filemanager-app">
+            <div class="filemanager-toolbar">
+                <button class="fm-btn" onclick="fileManagerGoBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="fm-btn" onclick="fileManagerGoForward()">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="fm-btn" onclick="fileManagerGoUp()">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+                <button class="fm-btn" onclick="fileManagerRefresh()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <div class="fm-path-bar">
+                    <i class="fas fa-folder"></i>
+                    <input type="text" class="fm-path-input" readonly>
+                </div>
+                <button class="fm-btn" onclick="fileManagerCreateFolder()">
+                    <i class="fas fa-folder-plus"></i>
+                </button>
+                <button class="fm-btn" onclick="fileManagerCreateFile()">
+                    <i class="fas fa-file-plus"></i>
+                </button>
+            </div>
+            <div class="filemanager-sidebar">
+                <div class="fm-sidebar-item" onclick="fileManagerGoTo('/home')">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="fm-sidebar-item" onclick="fileManagerGoTo('/home/Documents')">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Documents</span>
+                </div>
+                <div class="fm-sidebar-item" onclick="fileManagerGoTo('/home/Downloads')">
+                    <i class="fas fa-download"></i>
+                    <span>Downloads</span>
+                </div>
+                <div class="fm-sidebar-item" onclick="fileManagerGoTo('/home/Pictures')">
+                    <i class="fas fa-image"></i>
+                    <span>Pictures</span>
+                </div>
+                <div class="fm-sidebar-item" onclick="fileManagerGoTo('/home/Music')">
+                    <i class="fas fa-music"></i>
+                    <span>Music</span>
+                </div>
+                <div class="fm-sidebar-item" onclick="fileManagerGoTo('/home/Videos')">
+                    <i class="fas fa-video"></i>
+                    <span>Videos</span>
+                </div>
+                <div class="fm-sidebar-item" onclick="fileManagerGoTo('/home/Desktop')">
+                    <i class="fas fa-desktop"></i>
+                    <span>Desktop</span>
+                </div>
+            </div>
+            <div class="filemanager-content"></div>
+            <div class="filemanager-statusbar">
+                <span class="fm-status-text"></span>
+            </div>
+        </div>
+    </template>
+
+    <!-- Calculator Template -->
+    <template id="calculator-template">
+        <div class="calculator-app">
+            <div class="calc-display">
+                <div class="calc-history"></div>
+                <div class="calc-input">0</div>
+            </div>
+            <div class="calc-buttons">
+                <div class="calc-row">
+                    <button class="calc-btn func" onclick="calcClear()">C</button>
+                    <button class="calc-btn func" onclick="calcClearEntry()">CE</button>
+                    <button class="calc-btn func" onclick="calcBackspace()">⌫</button>
+                    <button class="calc-btn operator" onclick="calcOperator('/')">÷</button>
+                </div>
+                <div class="calc-row">
+                    <button class="calc-btn" onclick="calcNumber('7')">7</button>
+                    <button class="calc-btn" onclick="calcNumber('8')">8</button>
+                    <button class="calc-btn" onclick="calcNumber('9')">9</button>
+                    <button class="calc-btn operator" onclick="calcOperator('*')">×</button>
+                </div>
+                <div class="calc-row">
+                    <button class="calc-btn" onclick="calcNumber('4')">4</button>
+                    <button class="calc-btn" onclick="calcNumber('5')">5</button>
+                    <button class="calc-btn" onclick="calcNumber('6')">6</button>
+                    <button class="calc-btn operator" onclick="calcOperator('-')">−</button>
+                </div>
+                <div class="calc-row">
+                    <button class="calc-btn" onclick="calcNumber('1')">1</button>
+                    <button class="calc-btn" onclick="calcNumber('2')">2</button>
+                    <button class="calc-btn" onclick="calcNumber('3')">3</button>
+                    <button class="calc-btn operator" onclick="calcOperator('+')">+</button>
+                </div>
+                <div class="calc-row">
+                    <button class="calc-btn" onclick="calcToggleSign()">±</button>
+                    <button class="calc-btn" onclick="calcNumber('0')">0</button>
+                    <button class="calc-btn" onclick="calcDecimal()">.</button>
+                    <button class="calc-btn equals" onclick="calcEquals()">=</button>
+                </div>
+            </div>
+            <div class="calc-scientific hidden">
+                <div class="calc-row">
+                    <button class="calc-btn func" onclick="calcScientific('sin')">sin</button>
+                    <button class="calc-btn func" onclick="calcScientific('cos')">cos</button>
+                    <button class="calc-btn func" onclick="calcScientific('tan')">tan</button>
+                    <button class="calc-btn func" onclick="calcScientific('log')">log</button>
+                </div>
+                <div class="calc-row">
+                    <button class="calc-btn func" onclick="calcScientific('ln')">ln</button>
+                    <button class="calc-btn func" onclick="calcScientific('sqrt')">√</button>
+                    <button class="calc-btn func" onclick="calcScientific('pow')">x²</button>
+                    <button class="calc-btn func" onclick="calcScientific('pi')">π</button>
+                </div>
+            </div>
+            <div class="calc-mode-toggle">
+                <button onclick="toggleCalcMode()">Mode Scientific</button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Browser Template -->
+    <template id="browser-template">
+        <div class="browser-app">
+            <div class="browser-toolbar">
+                <button class="browser-btn" onclick="browserBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="browser-btn" onclick="browserForward()">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="browser-btn" onclick="browserRefresh()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="browser-btn" onclick="browserHome()">
+                    <i class="fas fa-home"></i>
+                </button>
+                <div class="browser-url-bar">
+                    <i class="fas fa-lock"></i>
+                    <input type="text" class="browser-url-input" placeholder="Masukkan URL..." onkeypress="handleBrowserUrl(event)">
+                    <button onclick="browserGo()"><i class="fas fa-arrow-right"></i></button>
+                </div>
+                <button class="browser-btn" onclick="browserBookmarks()">
+                    <i class="fas fa-star"></i>
+                </button>
+                <button class="browser-btn" onclick="browserMenu()">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+            </div>
+            <div class="browser-content">
+                <iframe class="browser-iframe" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
+                <div class="browser-homepage">
+                    <div class="browser-homepage-content">
+                        <h1>WebOS Browser</h1>
+                        <div class="browser-search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari di web..." onkeypress="handleBrowserSearch(event)">
+                        </div>
+                        <div class="browser-bookmarks-grid">
+                            <div class="browser-bookmark" onclick="browserGoTo('https://www.google.com')">
+                                <div class="bookmark-icon"><i class="fab fa-google"></i></div>
+                                <span>Google</span>
+                            </div>
+                            <div class="browser-bookmark" onclick="browserGoTo('https://www.youtube.com')">
+                                <div class="bookmark-icon"><i class="fab fa-youtube"></i></div>
+                                <span>YouTube</span>
+                            </div>
+                            <div class="browser-bookmark" onclick="browserGoTo('https://www.github.com')">
+                                <div class="bookmark-icon"><i class="fab fa-github"></i></div>
+                                <span>GitHub</span>
+                            </div>
+                            <div class="browser-bookmark" onclick="browserGoTo('https://www.wikipedia.org')">
+                                <div class="bookmark-icon"><i class="fab fa-wikipedia-w"></i></div>
+                                <span>Wikipedia</span>
+                            </div>
+                            <div class="browser-bookmark" onclick="browserGoTo('https://www.stackoverflow.com')">
+                                <div class="bookmark-icon"><i class="fab fa-stack-overflow"></i></div>
+                                <span>Stack Overflow</span>
+                            </div>
+                            <div class="browser-bookmark" onclick="browserGoTo('https://www.reddit.com')">
+                                <div class="bookmark-icon"><i class="fab fa-reddit"></i></div>
+                                <span>Reddit</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Lightweight & Fast</h5>
-                        <p class="card-text">Optimized for performance, running smoothly on both old and new hardware.</p>
-                    </div>
+            <div class="browser-statusbar">
+                <span class="browser-status-text">Siap</span>
+            </div>
+        </div>
+    </template>
+
+    <!-- Notepad Template -->
+    <template id="notepad-template">
+        <div class="notepad-app">
+            <div class="notepad-toolbar">
+                <button class="np-btn" onclick="notepadNew()">
+                    <i class="fas fa-file"></i> Baru
+                </button>
+                <button class="np-btn" onclick="notepadOpen()">
+                    <i class="fas fa-folder-open"></i> Buka
+                </button>
+                <button class="np-btn" onclick="notepadSave()">
+                    <i class="fas fa-save"></i> Simpan
+                </button>
+                <div class="np-separator"></div>
+                <button class="np-btn" onclick="notepadCut()">
+                    <i class="fas fa-cut"></i>
+                </button>
+                <button class="np-btn" onclick="notepadCopy()">
+                    <i class="fas fa-copy"></i>
+                </button>
+                <button class="np-btn" onclick="notepadPaste()">
+                    <i class="fas fa-paste"></i>
+                </button>
+                <div class="np-separator"></div>
+                <select class="np-font-size" onchange="notepadFontSize(this.value)">
+                    <option value="12">12px</option>
+                    <option value="14" selected>14px</option>
+                    <option value="16">16px</option>
+                    <option value="18">18px</option>
+                    <option value="20">20px</option>
+                </select>
+                <input type="color" class="np-color" value="#ffffff" onchange="notepadFontColor(this.value)" title="Warna Teks">
+                <input type="color" class="np-color" value="#1e1e1e" onchange="notepadBgColor(this.value)" title="Warna Background">
+            </div>
+            <div class="notepad-content">
+                <textarea class="notepad-textarea" placeholder="Mulai mengetik..."></textarea>
+            </div>
+            <div class="notepad-statusbar">
+                <span class="np-status-text">Baris: 1 | Kolom: 0 | Karakter: 0</span>
+            </div>
+        </div>
+    </template>
+
+    <!-- Settings Template -->
+    <template id="settings-template">
+        <div class="settings-app">
+            <div class="settings-sidebar">
+                <div class="settings-nav-item active" onclick="showSettingsPage('personalization')">
+                    <i class="fas fa-palette"></i>
+                    <span>Personalisasi</span>
+                </div>
+                <div class="settings-nav-item" onclick="showSettingsPage('display')">
+                    <i class="fas fa-desktop"></i>
+                    <span>Tampilan</span>
+                </div>
+                <div class="settings-nav-item" onclick="showSettingsPage('sound')">
+                    <i class="fas fa-volume-up"></i>
+                    <span>Suara</span>
+                </div>
+                <div class="settings-nav-item" onclick="showSettingsPage('network')">
+                    <i class="fas fa-wifi"></i>
+                    <span>Jaringan</span>
+                </div>
+                <div class="settings-nav-item" onclick="showSettingsPage('user')">
+                    <i class="fas fa-user"></i>
+                    <span>Pengguna</span>
+                </div>
+                <div class="settings-nav-item" onclick="showSettingsPage('about')">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Tentang</span>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Secure by Default</h5>
-                        <p class="card-text">With a strong focus on security, keeping your system safe from threats.</p>
-                    </div>
-                </div>
+            <div class="settings-content">
+                <!-- Pages will be loaded here -->
             </div>
-        </section>
+        </div>
+    </template>
 
-        <section id="download" class="text-center mt-5">
-            <h2>Download GeminiOS</h2>
-            <p class="lead">Choose your preferred desktop environment.</p>
-            <div class="row mt-4">
-                <div class="col">
-                    <a href="https://drive.google.com/file/d/1dCDNX8LFxkFZlz_HlrDXlkqEm5JjDGke/view?usp=drive_link" class="btn btn-primary btn-lg">GNOME</a>
-                </div>
-                <div class="col">
-                    <a href="https://drive.google.com/file/d/1HUq6I0LClr4XX5V0hOsi1mCwVTYGL6Vn/view?usp=drive_link" class="btn btn-secondary btn-lg">Plasma</a>
-                </div>
-                <div class="col">
-                    <a href="https://drive.google.com/file/d/14Cjb8grQ9YKRBz8AekVUHvrffA03hw-Z/view?usp=drive_link" class="btn btn-success btn-lg">XFCE</a>
-                </div>
-                <div class="col">
-                    <a href="https://drive.google.com/file/d/1Td-pTpxnINfEy6tqgXmjNiUe6nSkQx-5/view?usp=drive_link" class="btn btn-info btn-lg">Cinnamon</a>
-                </div>
-                <div class="col">
-                    <a href="https://drive.google.com/file/d/1dCDNX8LFxkFZlz_HlrDXlkqEm5JjDGke/view?usp=drive_link" class="btn btn-warning btn-lg">Openbox</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-dark text-white text-center p-3 mt-5">
-        <p>&copy; 2025 GeminiOS Project. All Rights Reserved.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="js/filesystem.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/filemanager.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/browser.js"></script>
+    <script src="js/notepad.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/windows.js"></script>
+    <script src="js/desktop.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
