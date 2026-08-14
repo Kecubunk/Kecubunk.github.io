@@ -305,50 +305,56 @@
                 <div class="calc-history"></div>
                 <div class="calc-input">0</div>
             </div>
-            <div class="calc-buttons">
-                <div class="calc-row">
-                    <button class="calc-btn func" onclick="calcClear()">C</button>
-                    <button class="calc-btn func" onclick="calcClearEntry()">CE</button>
-                    <button class="calc-btn func" onclick="calcBackspace()">⌫</button>
-                    <button class="calc-btn operator" onclick="calcOperator('/')">÷</button>
+            <div class="calc-main-container">
+                <div class="calc-standard">
+                    <div class="calc-row">
+                        <button class="calc-btn func" onclick="calcClear()">C</button>
+                        <button class="calc-btn func" onclick="calcClearEntry()">CE</button>
+                        <button class="calc-btn func" onclick="calcBackspace()">⌫</button>
+                        <button class="calc-btn operator" onclick="calcOperator('/')">÷</button>
+                    </div>
+                    <div class="calc-row">
+                        <button class="calc-btn" onclick="calcNumber('7')">7</button>
+                        <button class="calc-btn" onclick="calcNumber('8')">8</button>
+                        <button class="calc-btn" onclick="calcNumber('9')">9</button>
+                        <button class="calc-btn operator" onclick="calcOperator('*')">×</button>
+                    </div>
+                    <div class="calc-row">
+                        <button class="calc-btn" onclick="calcNumber('4')">4</button>
+                        <button class="calc-btn" onclick="calcNumber('5')">5</button>
+                        <button class="calc-btn" onclick="calcNumber('6')">6</button>
+                        <button class="calc-btn operator" onclick="calcOperator('-')">−</button>
+                    </div>
+                    <div class="calc-row">
+                        <button class="calc-btn" onclick="calcNumber('1')">1</button>
+                        <button class="calc-btn" onclick="calcNumber('2')">2</button>
+                        <button class="calc-btn" onclick="calcNumber('3')">3</button>
+                        <button class="calc-btn operator" onclick="calcOperator('+')">+</button>
+                    </div>
+                    <div class="calc-row">
+                        <button class="calc-btn" onclick="calcToggleSign()">±</button>
+                        <button class="calc-btn" onclick="calcNumber('0')">0</button>
+                        <button class="calc-btn" onclick="calcDecimal()">.</button>
+                        <button class="calc-btn equals" onclick="calcEquals()">=</button>
+                    </div>
                 </div>
-                <div class="calc-row">
-                    <button class="calc-btn" onclick="calcNumber('7')">7</button>
-                    <button class="calc-btn" onclick="calcNumber('8')">8</button>
-                    <button class="calc-btn" onclick="calcNumber('9')">9</button>
-                    <button class="calc-btn operator" onclick="calcOperator('*')">×</button>
-                </div>
-                <div class="calc-row">
-                    <button class="calc-btn" onclick="calcNumber('4')">4</button>
-                    <button class="calc-btn" onclick="calcNumber('5')">5</button>
-                    <button class="calc-btn" onclick="calcNumber('6')">6</button>
-                    <button class="calc-btn operator" onclick="calcOperator('-')">−</button>
-                </div>
-                <div class="calc-row">
-                    <button class="calc-btn" onclick="calcNumber('1')">1</button>
-                    <button class="calc-btn" onclick="calcNumber('2')">2</button>
-                    <button class="calc-btn" onclick="calcNumber('3')">3</button>
-                    <button class="calc-btn operator" onclick="calcOperator('+')">+</button>
-                </div>
-                <div class="calc-row">
-                    <button class="calc-btn" onclick="calcToggleSign()">±</button>
-                    <button class="calc-btn" onclick="calcNumber('0')">0</button>
-                    <button class="calc-btn" onclick="calcDecimal()">.</button>
-                    <button class="calc-btn equals" onclick="calcEquals()">=</button>
-                </div>
-            </div>
-            <div class="calc-scientific hidden">
-                <div class="calc-row">
-                    <button class="calc-btn func" onclick="calcScientific('sin')">sin</button>
-                    <button class="calc-btn func" onclick="calcScientific('cos')">cos</button>
-                    <button class="calc-btn func" onclick="calcScientific('tan')">tan</button>
-                    <button class="calc-btn func" onclick="calcScientific('log')">log</button>
-                </div>
-                <div class="calc-row">
-                    <button class="calc-btn func" onclick="calcScientific('ln')">ln</button>
-                    <button class="calc-btn func" onclick="calcScientific('sqrt')">√</button>
-                    <button class="calc-btn func" onclick="calcScientific('pow')">x²</button>
-                    <button class="calc-btn func" onclick="calcScientific('pi')">π</button>
+                <div class="calc-scientific hidden">
+                    <div class="calc-sci-row">
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('sin')">sin</button>
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('cos')">cos</button>
+                    </div>
+                    <div class="calc-sci-row">
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('tan')">tan</button>
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('log')">log</button>
+                    </div>
+                    <div class="calc-sci-row">
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('ln')">ln</button>
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('sqrt')">√</button>
+                    </div>
+                    <div class="calc-sci-row">
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('pow')">x²</button>
+                        <button class="calc-btn func sci-btn" onclick="calcScientific('pi')">π</button>
+                    </div>
                 </div>
             </div>
             <div class="calc-mode-toggle">

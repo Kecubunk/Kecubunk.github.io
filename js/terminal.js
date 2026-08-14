@@ -12,7 +12,7 @@ class Terminal {
         this.env = {
             USER: 'user',
             HOME: '/home/user',
-            HOSTNAME: 'webos',
+            HOSTNAME: 'carbonos',
             PS1: '\\u@\\h:\\w\\$ '
         };
         this.aliases = {
@@ -91,7 +91,7 @@ class Terminal {
 
     printWelcome() {
         this.printLine('');
-        this.printLine('\x1b[1;34mWelcome to WebOS Terminal\x1b[0m');
+        this.printLine('\x1b[1;34mWelcome to CarbonOS Terminal\x1b[0m');
         this.printLine('Type "help" for available commands.');
         this.printLine('');
     }
@@ -243,14 +243,76 @@ class Terminal {
             'tar': () => this.cmdTar(args, opts),
             'gzip': () => this.cmdGzip(args),
             'gunzip': () => this.cmdGunzip(args),
+            'nano': () => this.cmdNano(args),
+            'vi': () => this.cmdNano(args),
+            'vim': () => this.cmdNano(args),
             'history': () => this.cmdHistory()
         };
 
         if (commands[cmd]) {
             commands[cmd]();
+        } else if (cmd.startsWith('./') || cmd.startsWith('/')) {
+            // Execute script file
+            this.executeScript(cmd, args);
         } else {
             this.printLine(`bash: ${cmd}: command not found`);
         }
+    }
+
+    executeScript(scriptPath, args) {
+        // Resolve path
+        let path = scriptPath;
+        if (path.startsWith('./')) {
+            path = this.resolvePath(path.substring(2));
+        }
+        
+        // Get file
+        const item = fs.get(path);
+        if (!item) {
+            this.printLine(`bash: ${scriptPath}: No such file or directory`);
+            return;
+        }
+        
+        if (item.type === 'directory') {
+            this.printLine(`bash: ${scriptPath}: Is a directory`);
+            return;
+        }
+        
+        // Read file content
+        const result = fs.readFile(path);
+        if (result.error) {
+            this.printLine(`bash: ${scriptPath}: ${result.error}`);
+            return;
+        }
+        
+        // Check if it's a shell script
+        const content = result.content;
+        if (!content.startsWith('#!/bin/bash') && !content.startsWith('#!/bin/sh')) {
+            this.printLine(`bash: ${scriptPath}: cannot execute: not a valid script`);
+            this.printLine(`Hint: Add '#!/bin/bash' as first line`);
+            return;
+        }
+        
+        // Execute each line
+        this.printLine(`Executing: ${scriptPath}`);
+        this.printLine('---');
+        
+        const lines = content.split('\n');
+        for (const line of lines) {
+            const trimmed = line.trim();
+            
+            // Skip empty lines and comments
+            if (!trimmed || trimmed.startsWith('#')) continue;
+            
+            // Print command
+            this.printLine(`$ ${trimmed}`);
+            
+            // Execute command (recursively)
+            this.executeCommand(trimmed);
+        }
+        
+        this.printLine('---');
+        this.printLine(`Script completed: ${scriptPath}`);
     }
 
     // ===== Commands =====
@@ -258,7 +320,7 @@ class Terminal {
     cmdHelp() {
         this.printLine('Available commands:');
         this.printLine('  Navigation: cd, pwd, ls, tree, find');
-        this.printLine('  File ops:   cat, head, tail, touch, mkdir, rmdir, rm, cp, mv');
+        this.printLine('  File ops:   cat, head, tail, touch, mkdir, rmdir, rm, cp, mv, nano, vi');
         this.printLine('  Text:       echo, grep, wc');
         this.printLine('  System:     uname, date, uptime, whoami, id, ps, top, df, du, free');
         this.printLine('  Network:    ping, ifconfig, ip, netstat');
@@ -268,7 +330,7 @@ class Terminal {
 
     cmdUname(args, opts) {
         if (opts.a) {
-            this.printLine('Linux webos 5.15.0-webos #1 SMP x86_64 GNU/Linux');
+            this.printLine('Linux CarbonOS 5.15.0-carbonos #1 SMP x86_64 GNU/Linux');
         } else {
             this.printLine('Linux');
         }
@@ -619,12 +681,12 @@ class Terminal {
     }
 
     cmdNeofetch() {
-        this.printLine('        .--.        user@webos');
+        this.printLine('        .--.        user@carbonos');
         this.printLine('       |o_o |       ----------');
-        this.printLine('       |:_/ |       OS: WebOS 1.0');
-        this.printLine('      //   \\ \\      Kernel: 5.15.0-webos');
+        this.printLine('       |:_/ |       OS: CarbonOS 1.0');
+        this.printLine('      //   \\ \\      Kernel: 5.15.0-carbonos');
         this.printLine('     (|     | )     Shell: bash');
-        this.printLine('    /\'\\_   _/`\\      Terminal: WebOS');
+        this.printLine('    /\'\\_   _/`\\      Terminal: CarbonOS');
         this.printLine('    \\___)=(___/      CPU: Virtual CPU (4) @ 2.4GHz');
     }
 
@@ -763,6 +825,39 @@ class Terminal {
             return;
         }
         this.printLine(`gunzip: ${args[0]} -> ${args[0].replace('.gz', '')}`);
+    }
+
+    cmdNano(args) {
+        if (!args[0]) {
+            this.printLine('nano: missing file operand');
+            this.printLine('Usage: nano <filename>');
+            return;
+        }
+        
+        const path = this.resolvePath(args[0]);
+        const item = fs.get(path);
+        
+        // Check if file exists
+        if (item && item.type === 'directory') {
+            this.printLine(`nano: ${args[0]}: Is a directory`);
+            return;
+        }
+        
+        // Create file if doesn't exist
+        if (!item) {
+            fs.writeFile(path, '');
+            this.printLine(`nano: Created new file '${args[0]}'`);
+        }
+        
+        // Open Notepad with the file
+        const windowId = openApp('notepad');
+        setTimeout(() => {
+            const windowEl = document.querySelector(`[data-window-id="${windowId}"]`);
+            if (windowEl && windowEl._notepadInstance) {
+                windowEl._notepadInstance.currentPath = this.currentPath;
+                windowEl._notepadInstance.openFile(path);
+            }
+        }, 100);
     }
 
     // ===== Utilities =====

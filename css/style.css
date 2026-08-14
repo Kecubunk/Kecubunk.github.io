@@ -128,7 +128,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    z-index: 1;
+    z-index: 50;
 }
 
 .desktop-icon {
@@ -486,7 +486,9 @@ body {
 
 /* ===== Windows Container ===== */
 #windows-container {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: calc(100vh - 48px);
     z-index: 10;

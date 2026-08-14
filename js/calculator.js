@@ -221,8 +221,19 @@ function toggleCalcMode() {
     const windowEl = document.querySelector('.window.focused');
     if (windowEl) {
         const scientificEl = windowEl.querySelector('.calc-scientific');
+        const toggleBtn = windowEl.querySelector('.calc-mode-toggle button');
         if (scientificEl) {
+            const isHidden = scientificEl.classList.contains('hidden');
             scientificEl.classList.toggle('hidden');
+            
+            // Resize window
+            if (isHidden) {
+                windowEl.style.width = '440px';
+                if (toggleBtn) toggleBtn.textContent = 'Mode Standard';
+            } else {
+                windowEl.style.width = '320px';
+                if (toggleBtn) toggleBtn.textContent = 'Mode Scientific';
+            }
         }
     }
 }

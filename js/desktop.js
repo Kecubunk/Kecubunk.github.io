@@ -48,7 +48,9 @@ function setupDesktopIcons() {
         // Double click to open app
         icon.addEventListener('dblclick', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             const appName = icon.dataset.app;
+            console.log('Opening app:', appName);
             if (appName) {
                 openApp(appName);
             }
@@ -56,11 +58,14 @@ function setupDesktopIcons() {
     });
     
     // Click on desktop to deselect icons
-    document.getElementById('desktop').addEventListener('click', (e) => {
-        if (e.target.id === 'desktop' || e.target.id === 'desktop-icons') {
-            icons.forEach(i => i.classList.remove('selected'));
-        }
-    });
+    const desktop = document.getElementById('desktop');
+    if (desktop) {
+        desktop.addEventListener('click', (e) => {
+            if (e.target.id === 'desktop' || e.target.id === 'desktop-icons' || e.target.closest('#desktop-icons') === null) {
+                icons.forEach(i => i.classList.remove('selected'));
+            }
+        });
+    }
 }
 
 // Sidebar events

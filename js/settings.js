@@ -151,12 +151,12 @@ class Settings {
     getAboutPage() {
         return `
             <div class="settings-section">
-                <h2>Tentang WebOS</h2>
+                <h2>Tentang CarbonOS</h2>
                 <div class="settings-group">
                     <div class="about-logo">
                         <i class="fas fa-desktop" style="font-size: 48px; color: #0078d4;"></i>
                         <div>
-                            <h1 style="font-size: 24px;">WebOS</h1>
+                            <h1 style="font-size: 24px;">CarbonOS</h1>
                             <p class="about-version" style="color: #666;">Versi 1.0.0</p>
                         </div>
                     </div>
@@ -165,7 +165,7 @@ class Settings {
                     <h3>Informasi Sistem</h3>
                     <div class="settings-item">
                         <label>Kernel</label>
-                        <span>5.15.0-webos</span>
+                        <span>5.15.0-carbonos</span>
                     </div>
                     <div class="settings-item">
                         <label>Memori</label>

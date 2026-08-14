@@ -1,11 +1,13 @@
 /**
  * WebOS Notepad Application
+ * Uses virtual filesystem (filesystem.js)
  */
 
 class Notepad {
     constructor(windowId) {
         this.windowId = windowId;
         this.currentFile = null;
+        this.currentPath = '/home/user';
         this.modified = false;
         
         this.textareaEl = null;
@@ -36,7 +38,7 @@ class Notepad {
 
     newFile() {
         if (this.modified) {
-            if (confirm('Save changes?')) {
+            if (confirm('Simpan perubahan?')) {
                 this.save();
             }
         }
@@ -47,59 +49,150 @@ class Notepad {
     }
 
     open() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.txt,.md,.json,.js,.html,.css';
+        // Show file browser dialog
+        this.showOpenDialog();
+    }
+
+    showOpenDialog() {
+        // Create modal dialog
+        const overlay = document.createElement('div');
+        overlay.className = 'dialog-overlay';
+        overlay.innerHTML = `
+            <div class="dialog-modal" style="min-width: 500px;">
+                <div class="dialog-header">
+                    <h3><i class="fas fa-folder-open"></i> Buka File</h3>
+                    <button class="dialog-close" onclick="this.closest('.dialog-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="dialog-body">
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" class="dialog-path-input" placeholder="Path file..." 
+                               style="flex: 1; padding: 8px; background: #1e1e1e; border: 1px solid #3d3d3d; border-radius: 4px; color: #f0f0f0;">
+                    </div>
+                    <div class="dialog-file-list" style="height: 250px; overflow-y: auto; background: #1e1e1e; border-radius: 4px; padding: 10px;">
+                    </div>
+                </div>
+                <div class="dialog-footer">
+                    <button class="dialog-btn secondary" onclick="this.closest('.dialog-overlay').remove()">Batal</button>
+                    <button class="dialog-btn primary" onclick="notepadDialogOpen()">Buka</button>
+                </div>
+            </div>
+        `;
         
-        input.onchange = (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    if (this.textareaEl) {
-                        this.textareaEl.value = event.target.result;
-                    }
-                    this.currentFile = file.name;
-                    this.modified = false;
-                    this.updateStatus();
-                };
-                reader.readAsText(file);
-            }
+        document.body.appendChild(overlay);
+        
+        // Store reference
+        window._notepadOpenDialog = {
+            instance: this,
+            pathInput: overlay.querySelector('.dialog-path-input'),
+            fileList: overlay.querySelector('.dialog-file-list'),
+            overlay: overlay
         };
         
-        input.click();
+        // Load initial directory
+        this.loadFileDialog('/home/user');
+    }
+
+    loadFileDialog(path) {
+        if (!window._notepadOpenDialog) return;
+        
+        const dialog = window._notepadOpenDialog;
+        dialog.pathInput.value = path;
+        
+        const result = fs.listDir(path);
+        if (result.error) {
+            dialog.fileList.innerHTML = `<div style="color: #f44336; padding: 10px;">${result.error}</div>`;
+            return;
+        }
+        
+        let html = '';
+        
+        // Add parent directory
+        if (path !== '/') {
+            html += `<div class="dialog-file-item" onclick="notepadFileDialogNavigate('${path}/..')" 
+                     style="padding: 8px 10px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: 10px;">
+                     <i class="fas fa-folder" style="color: #ffc107;"></i>
+                     <span>..</span>
+                     </div>`;
+        }
+        
+        result.items.forEach(item => {
+            const icon = item.type === 'directory' ? 'fa-folder' : 'fa-file';
+            const color = item.type === 'directory' ? '#ffc107' : '#888';
+            const fullPath = path === '/' ? '/' + item.name : path + '/' + item.name;
+            
+            if (item.type === 'directory') {
+                html += `<div class="dialog-file-item" onclick="notepadFileDialogNavigate('${fullPath}')" 
+                         style="padding: 8px 10px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: 10px;">
+                         <i class="fas ${icon}" style="color: ${color};"></i>
+                         <span>${item.name}</span>
+                         </div>`;
+            } else {
+                html += `<div class="dialog-file-item" onclick="notepadFileDialogSelect('${fullPath}')" 
+                         style="padding: 8px 10px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: 10px;">
+                         <i class="fas ${icon}" style="color: ${color};"></i>
+                         <span>${item.name}</span>
+                         </div>`;
+            }
+        });
+        
+        dialog.fileList.innerHTML = html;
+    }
+
+    openFile(path) {
+        const result = fs.readFile(path);
+        if (result.error) {
+            alert(result.error);
+            return;
+        }
+        
+        if (this.textareaEl) {
+            this.textareaEl.value = result.content;
+        }
+        this.currentFile = path;
+        this.modified = false;
+        this.updateStatus();
+        
+        showNotification(`File dibuka: ${path}`, 'success');
     }
 
     save() {
         if (!this.currentFile) {
             this.saveAs();
         } else {
-            this.downloadFile(this.currentFile);
+            this.saveFile(this.currentFile);
         }
     }
 
     saveAs() {
-        const filename = prompt('Enter filename:', 'untitled.txt');
+        // Show save dialog
+        const filename = prompt('Masukkan nama file:', this.currentFile || 'untitled.txt');
         if (filename) {
-            this.currentFile = filename;
-            this.downloadFile(filename);
+            // Determine path
+            let path = filename;
+            if (!filename.startsWith('/')) {
+                path = this.currentPath + '/' + filename;
+            }
+            this.saveFile(path);
+            this.currentFile = path;
         }
     }
 
-    downloadFile(filename) {
+    saveFile(path) {
         if (!this.textareaEl) return;
         
-        const blob = new Blob([this.textareaEl.value], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
+        const content = this.textareaEl.value;
+        const result = fs.writeFile(path, content);
         
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.click();
+        if (result.error) {
+            alert(result.error);
+            return;
+        }
         
-        URL.revokeObjectURL(url);
         this.modified = false;
         this.updateStatus();
+        showNotification(`File disimpan: ${path}`, 'success');
     }
 
     cut() {
@@ -233,5 +326,31 @@ function notepadBgColor(color) {
     const windowEl = document.querySelector('.window.focused');
     if (windowEl && windowEl._notepadInstance) {
         windowEl._notepadInstance.setBgColor(color);
+    }
+}
+
+// Dialog helper functions
+function notepadFileDialogNavigate(path) {
+    if (window._notepadOpenDialog) {
+        window._notepadOpenDialog.instance.loadFileDialog(path);
+    }
+}
+
+function notepadFileDialogSelect(path) {
+    if (window._notepadOpenDialog) {
+        window._notepadOpenDialog.pathInput.value = path;
+        // Highlight selected
+        const items = window._notepadOpenDialog.fileList.querySelectorAll('.dialog-file-item');
+        items.forEach(item => item.style.background = '');
+        event.target.closest('.dialog-file-item').style.background = 'rgba(0, 120, 212, 0.2)';
+    }
+}
+
+function notepadDialogOpen() {
+    if (window._notepadOpenDialog) {
+        const path = window._notepadOpenDialog.pathInput.value;
+        window._notepadOpenDialog.instance.openFile(path);
+        window._notepadOpenDialog.overlay.remove();
+        delete window._notepadOpenDialog;
     }
 }

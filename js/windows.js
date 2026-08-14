@@ -86,7 +86,7 @@ function getAppConfig(appName) {
             title: 'Calculator',
             icon: 'fa-calculator',
             width: 320,
-            height: 480
+            height: 420
         },
         browser: {
             title: 'Browser',
